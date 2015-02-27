@@ -58,6 +58,6 @@ module.exports = (robot) ->
               done: (errors, window) ->
                 unless errors
                   title = window.document.title.trim()
-                  msg.send "#{title}"
+                  msg.send "/me : #{title}"
             )
       )
