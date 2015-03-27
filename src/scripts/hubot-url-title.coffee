@@ -45,7 +45,7 @@ module.exports = (robot) ->
 
     unless ignore
       request(
-        {url: url, encoding: null, followRedirect: false}
+        {url: url, encoding: null, followRedirect: false, headers: {'Accept-Language': 'jp'}}
         (error, response, body) ->
           if response.statusCode == 200
             detect = jschardet.detect body
