@@ -1,11 +1,6 @@
 # Description:
 #   Returns the title when a link is posted
 #
-# Dependencies:
-#   "jsdom": "0.2.15"
-#   "underscore": "1.3.3"
-#   "request": "2.30.0"
-#
 # Configuration:
 #   HUBOT_URL_TITLE_IGNORE_URLS - RegEx used to exclude Urls
 #   HUBOT_URL_TITLE_IGNORE_USERS - Comma-separated list of users to ignore
@@ -19,8 +14,7 @@
 jsdom      = require 'jsdom'
 _          = require 'underscore'
 request    = require 'request'
-jschardet  = require 'jschardet'
-iconv      = require 'iconv'
+iconv      = require 'iconv-lite'
 
 module.exports = (robot) ->
 
@@ -48,10 +42,7 @@ module.exports = (robot) ->
         {url: url, encoding: null, followRedirect: false, headers: {'Accept-Language': 'ja'}}
         (error, response, body) ->
           if response.statusCode == 200
-            detect = jschardet.detect body
-            charset = detect.encoding
-            ic = new iconv.Iconv(charset, 'UTF-8//TRANSLIT//IGNORE')
-            convertBody = ic.convert(body).toString()
+            convertBody = iconv.decode(body,'utf8')
 
             jsdom.env(
               convertBody
